@@ -1,9 +1,12 @@
 package com.tomszadev.cardatabase;
 
 import com.tomszadev.cardatabase.domain.Car;
-import com.tomszadev.cardatabase.domain.CarRepository;
+import com.tomszadev.cardatabase.domain.User;
+import com.tomszadev.cardatabase.repository.CarRepoPageAndSort;
+import com.tomszadev.cardatabase.repository.CarRepository;
 import com.tomszadev.cardatabase.domain.Owner;
-import com.tomszadev.cardatabase.domain.OwnerRepository;
+import com.tomszadev.cardatabase.repository.OwnerRepository;
+import com.tomszadev.cardatabase.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +24,17 @@ public class CardatabaseApplication implements CommandLineRunner {
             LoggerFactory.getLogger(CardatabaseApplication.class);
 
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private CarRepository carRepository;
     @Autowired
     private OwnerRepository ownerRepository;
+    @Autowired
+    private CarRepoPageAndSort carRepoPageAndSort;
 
     public static void main(String[] args) {
 
         SpringApplication.run(CardatabaseApplication.class, args);
-
-
     }
 
     @Override
@@ -54,6 +59,13 @@ public class CardatabaseApplication implements CommandLineRunner {
         for (Car car : carRepository.findAll()) {
             logger.info(car.getBrand() + " -- " + car.getModel());
         }
+        userRepository.save(new User("user","$2a$10$9vKEZyd1f0Sn5D.LTpzSQOM5UoQQJlabaNAbz1Zyl5bL4HDF07T0O", "USER"));
+        userRepository.save(new User("admin","$2a$10$x/XiayEE1p5tyr4Ooz3dJOOkDlFkyxjpseMyaVyeFD/JN9MvUUK9u", "ADMIN"));
+
         logger.info("Current cars in databes = " + carRepository.count());
+
+        System.out.println(("------ " + carRepository.findByBrand("Ford").toString() + "------"));
+        System.out.println(("------ "+ ownerRepository.findOwnersByFirstname("Michel") + "------"));
+        System.out.println(("------ "+ carRepoPageAndSort.findCarByColorContainingIgnoreCase("a") + "------"));
     }
 }

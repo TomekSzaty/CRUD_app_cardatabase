@@ -19,16 +19,16 @@ public class Car {
     @JoinColumn(name = "owner")
     private Owner owner;
 
-    @ManyToMany(mappedBy = "cars")
-    private Set<Owner> ownerSet = new HashSet<>();
+//    @ManyToMany(mappedBy = "cars")
+//    private Set<Owner> ownerSet = new HashSet<>();
 
-    public Set<Owner> getOwnerSet() {
-        return ownerSet;
-    }
-
-    public void setOwnerSet(Set<Owner> ownerSet) {
-        this.ownerSet = ownerSet;
-    }
+//    public Set<Owner> getOwnerSet() {
+//        return ownerSet;
+//    }
+//
+//    public void setOwnerSet(Set<Owner> ownerSet) {
+//        this.ownerSet = ownerSet;
+//    }
 
 
     public Owner getOwner() {
@@ -111,5 +111,15 @@ public class Car {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", registerNumber='" + registerNumber + '\'' +
+                '}';
     }
 }
